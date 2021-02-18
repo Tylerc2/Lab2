@@ -1,4 +1,9 @@
 ---
+title: "Team"
+output: html_document
+---
+
+---
 title: "DS202Lab2"
 output: html_document
 ---
@@ -91,6 +96,3 @@ j
 ```
 
 Numerically there is no statistical correlation of cocoa percentage and the date. THe correlation is only .021 which means there is no statistical correlation
-
-
-
