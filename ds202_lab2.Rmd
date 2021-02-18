@@ -17,8 +17,7 @@ hist(choco$Rating)
 ```{r}
 boxplot(choco$Rating)
 ```
-#The range of ratings is between 1-4 with the median falling at 3.25. The data skews left (towards the lower values
-#). There are also a number of outliers that are 2 or lower. Looking further at the dataset shows this is about 50.
+Wealthier Countries had much more chocolate production and the USA had as much as 6x more chocolate production as other countries
 
 
 
