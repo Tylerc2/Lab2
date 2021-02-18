@@ -1,0 +1,52 @@
+---
+title: "independent"
+output: html_document
+---
+
+```{r}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv")
+str(choco)
+```
+```{r}
+hist(choco$Rating)
+```
+```{r}
+boxplot(choco$Rating)
+```
+The range is between 1 and 4. The median is 3.25. Data skews left. There are outliers.
+```{r}
+library(dplyr)
+plotdata <- choco %>%
+  group_by(Location) %>%
+  summarize(Count = n())
+library(ggplot2)
+ggplot(plotdata, aes(x=Location, y=Count )) +geom_bar(stat = "identity") + theme(axis.text.x=element_text(angle=90, hjust=1))
+```
+```{r}
+cor(choco$Cocoa_Percent, choco$Rating)
+```
+```{r}
+plot(choco$Cocoa_Percent, choco$Rating)
+```
+The number ratings can depend on the location of the company because most of the worlds dark chocolate comes from the U.K and we can see in the graph that there are more ratings from that country.
+```{r}
+library(dplyr)
+plotdata <- choco %>%
+  group_by(Date) %>%
+  summarize(mean_Cocoa = mean(Cocoa_Percent))
+j <- ggplot(plotdata, aes(x=Date, y=mean_Cocoa ), ylim=c(ymin, ymax)) +geom_line(stat = "identity") + theme(axis.text.x=element_text(angle=90, hjust=1))
+j <- j + expand_limits(y = 0)
+j
+```
+Numerically there is not statistical correlation of rating and date with a value of .086. We believed there may have been one as the more choclate you taste over time the less you might like it which proved false
+```{r}
+res1 <- cor.test(choco$Date, choco$Rating, 
+                    method = "pearson")
+res1
+```
+There is no correlation between the rating and cocoa percentage the graphical summary of a lineplot is poor simpily because there is no correlation with a value of -0.15.
+Analysis 1 Date and Rating comparisons.
+Analysis 2 Date and Cocoa Percentage.
+
+
+
