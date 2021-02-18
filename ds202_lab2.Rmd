@@ -1,0 +1,97 @@
+---
+title: "DS202Lab2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+choco <- read.csv("https://raw.githubusercontent.com/xdaiISU/ds202materials/master/hwlabs/data/choco.csv") 
+```
+
+```{r}
+hist(choco$Rating)
+```
+```{r}
+boxplot(choco$Rating)
+```
+#The range of ratings is between 1-4 with the median falling at 3.25. The data skews left (towards the lower values
+#). There are also a number of outliers that are 2 or lower. Looking further at the dataset shows this is about 50.
+
+
+
+```{r}
+library(dplyr)
+plotdata <- choco %>%
+  group_by(Location) %>%
+  summarize(Count = n())
+library(ggplot2)
+ggplot(plotdata, aes(x=Location, y=Count )) +geom_bar(stat = "identity") + theme(axis.text.x=element_text(angle=90, hjust=1))
+
+
+```
+
+```{r}
+ggplot(choco, 
+       aes(x = Cocoa_Percent, 
+           y = Rating)) +
+  geom_line()
+
+```
+```{r}
+res <- cor.test(choco$Rating, choco$Cocoa_Percent, 
+                    method = "pearson")
+res
+```
+There is no correlation between the rating and cocoa percentage the graphical summary of a lineplot is poor simpily because there is no correlation with a value of -0.15
+
+Analysis 1 Date and Rating comparisons
+
+Analysis 2 Date and Cocoa Percentage
+
+
+```{r}
+res1 <- cor.test(choco$Date, choco$Rating, 
+                    method = "pearson")
+res1
+```
+
+```{r}
+library(dplyr)
+plotdata <- choco %>%
+  group_by(Date) %>%
+  summarize(mean_Rating = mean(Rating))
+
+
+
+p <- ggplot(plotdata, aes(x=Date, y=mean_Rating ), ylim=c(ymin, ymax)) +geom_line(stat = "identity") + theme(axis.text.x=element_text(angle=90, hjust=1))
+p <- p + expand_limits(y = 0)
+p
+```
+
+Numerically there is not statistical correlation of rating and date with a value of .086. We believed there may have been one as the more chocolate you taste over time the less you might like it which proved false. Graphically the same thing is shown
+
+```{r}
+res2 <- cor.test(choco$Date, choco$Cocoa_Percent, 
+                    method = "pearson")
+res2
+```
+```{r}
+library(dplyr)
+plotdata <- choco %>%
+  group_by(Date) %>%
+  summarize(mean_Cocoa = mean(Cocoa_Percent))
+
+
+
+j <- ggplot(plotdata, aes(x=Date, y=mean_Cocoa ), ylim=c(ymin, ymax)) +geom_line(stat = "identity") + theme(axis.text.x=element_text(angle=90, hjust=1))
+j <- p + expand_limits(y = 0)
+j
+```
+
+Numerically there is no statistical correlation of cocoa percentage and the date. THe correlation is only .021 which means there is no statistical correlation
+
+
+
